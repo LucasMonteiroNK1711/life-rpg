@@ -4,6 +4,7 @@ import TaskItem from "./TaskItem"
 const STORAGE_KEY = "lifeRpgTasks"
 const DATE_KEY = "lifeRpgLastReset"
 
+
 const defaultTasks = [
   { id: 1, title: "Treinar", xp: 50, done: false },
   { id: 2, title: "Estudar 1h", xp: 30, done: false },
@@ -19,6 +20,24 @@ export default function TaskList({ addXP }) {
     const saved = localStorage.getItem(STORAGE_KEY)
     return saved ? JSON.parse(saved) : defaultTasks
   })
+
+  const [newTitle, setNewTitle] = useState("")
+    function addTask() {
+  if (!newTitle.trim()) return
+
+  setTasks(prev => [
+    ...prev,
+    {
+      id: Date.now(),
+      title: newTitle,
+      xp: 30,
+      done: false
+    }
+  ])
+
+  setNewTitle("")
+}
+
 
   // 🔥 RESET DIÁRIO AUTOMÁTICO
   useEffect(() => {
@@ -54,6 +73,16 @@ export default function TaskList({ addXP }) {
   return (
     <div>
       <h3>Missões do dia</h3>
+
+      <div>
+  <input
+    value={newTitle}
+    onChange={e => setNewTitle(e.target.value)}
+    placeholder="Nova missão"
+  />
+  <button onClick={addTask}>Adicionar</button>
+</div>
+
 
       {tasks.map(task => (
         <TaskItem

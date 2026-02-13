@@ -1,5 +1,7 @@
 import XPBar from "./XPBar"
 import TaskList from "./TaskList"
+import HabitList from "./HabitList"
+import BossList from "./BossList"
 
 export default function Dashboard({ player, addXP }) {
   return (
@@ -10,8 +12,11 @@ export default function Dashboard({ player, addXP }) {
       </header>
 
       <XPBar xp={player.xp} level={player.level} />
-
+      
+      <BossList addXP={addXP} />
       <TaskList addXP={addXP} />
+      <HabitList addXP={addXP} />
+
     </div>
   )
 }
